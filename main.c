@@ -12,7 +12,7 @@ typedef struct _player{
     char* role;     //农民or地主
     card hand[20];  //手牌
     int numofhand;  //手牌数目
-    int code;       //玩家编号 123
+    int code;       //玩家编号123
 } player;
 
 
