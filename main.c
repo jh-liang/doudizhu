@@ -204,6 +204,7 @@ int aftercallingload(player playerx, card firstthree[3]){
 
 int ordering(int amount, card cards[amount]){
     for (int j = amount-1; j = 0; j--){
+        card a = cards[0];
         int a1 = 0;
         for (int i = 0; i = j; i++){
             if (cards[i].code < cards[i+1].code){
