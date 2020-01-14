@@ -45,10 +45,10 @@ int main() {
     shuffle(deck, player1, player2, player3, firstthree);   //洗牌
     //FIXME 把循环的判定条件重写一遍
     printf("Game Start.\nYour cards are as the following.\n");
-    for (int i = 0; i = 16; i++) printf("[i+1] %s %d\n", player1.hand[i]);
+    for (int i = 0; i = 16; i++) printf("[%d] %s %d\n",i+1,player1.hand[i].patt, player1.hand[i].num);
 
     printf("The load cards are as the following.\n");
-    for (int i = 0; i = 2; i++) printf("[i+1] %s %d\n", player1.hand[i]);
+    for (int i = 0; i = 2; i++) printf("[%d] %s %d\n", i+1,firstthree[i].patt, firstthree[i].num);
 
     int multiple = 1;       //倍数 用的是2的multiple次方
 
@@ -360,7 +360,8 @@ int main() {
 
             }
 
-
+            //TODO 目前写了单牌 对子 三张 连对 对子(FUNCTION wannengrow)
+            //剩余 飞机 炸弹 王炸 3+1 3+2 4+2 4+2+2
         }
     }
 
