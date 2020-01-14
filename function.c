@@ -62,7 +62,7 @@ int shuffle(card *deck, player player1, player player2, player player3, card *fi
 
 
 
-int aftercallingload(player playerx, card *firstthree) {       //叫完地主后派地主牌
+int aftercallingload(player playerx, card firstthree[3]) {       //叫完地主后派地主牌
     playerx.hand[17] = firstthree[0];
     playerx.hand[18] = firstthree[1];
     playerx.hand[19] = firstthree[2];
@@ -75,7 +75,7 @@ int ordering(int amount, card cards[amount]) {           //排序牌组
         card a = cards[0];                      //ljh:记错了 记成第二句是结束条件了。。。
         int a1 = 0;
         for (int i = 0; i <= j; i++) {   // 一样的问题
-            if (cards[i].code < cards[i + 1].code) {
+            if (cards[i].num < cards[i + 1].num){
                 a = cards[i + 1];
                 a1 = i + 1;
             }
@@ -107,9 +107,7 @@ int show(player playerx, card currentcard[13]) {         //出牌
                 currentcard[i].code = 0;
             }
             for (int i = cardcode; i <= playerx.numofhand; i++) {
-                playerx.hand[cardcode].patt = playerx.hand[cardcode + 1].patt;
-                playerx.hand[cardcode].num = playerx.hand[cardcode + 1].num;
-                playerx.hand[cardcode].code = playerx.hand[cardcode + 1].code;
+                playerx.hand[cardcode] = playerx.hand[cardcode + 1];
             }
             printf("Player %d gives out a card. Current card is [1] %s %d", playerx.code, currentcard[0].patt,
                    currentcard[0].num);
@@ -169,9 +167,7 @@ int show(player playerx, card currentcard[13]) {         //出牌
                 currentcard[i].code = 0;
             }
             for (int i = cardcode; i <= 19; i++) {
-                playerx.hand[cardcode].patt = playerx.hand[cardcode + 3].patt;
-                playerx.hand[cardcode].num = playerx.hand[cardcode + 3].num;
-                playerx.hand[cardcode].code = playerx.hand[cardcode + 3].code;
+                playerx.hand[cardcode]  = playerx.hand[cardcode + 3];
             }
             for (int i = playerx.numofhand; i <= playerx.numofhand + 3; i++) {
                 playerx.hand[i].patt = "nocard";
@@ -252,7 +248,7 @@ int show(player playerx, card currentcard[13]) {         //出牌
         }
 
 
-    }
+    }else wannengrow(playerx, currentcard, currentamount);
 }
 
 

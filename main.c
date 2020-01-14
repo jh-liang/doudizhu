@@ -59,14 +59,14 @@ int main() {
     if (player1.role == "load") {    //load = 地主
         printf("Do you want to be the load? Input your point! (0 - 2)");    //叫地主
         scanf("%d", &multiple);
-        if (multiple == 0 || deck[1].num < 6) {
-            printf("You don't want to be the load.\nPlayer 2 doesn't want to be the load.\nPlayer 3 wants to be the load.\nMultiple = 2.");
+        if (multiple == 0 && deck[1].num < 6) {
+            printf("You don't want to be the load.\nPlayer 2 doesn't want to be the load.\nPlayer 3 wants to be the load.\nMultiple = %d.", 2^multiple);
             player1.role == "farmer.";
             player3.role == "load";
             aftercallingload(player3, firstthree);          //叫地主后的给牌程序
-        } else if (multiple == 0 || deck[1].num >= 6) {
-            printf("You don't want to be the load.\nPlayer 2 wants to be the load.\n Multiple = 2.\nPlayer 3 doesn't want to be the load.");
+        } else if (multiple == 0 && deck[1].num >= 6) {
             multiple = 2;
+            printf("You don't want to be the load.\nPlayer 2 wants to be the load.\n Multiple = %d.\nPlayer 3 doesn't want to be the load.", 2^multiple);
             player1.role == "farmer.";
             player2.role == "load";
             aftercallingload(player2, firstthree);
@@ -77,14 +77,14 @@ int main() {
         }
     } else {
         if (player2.role == "load") {
-            printf("Player2 wants to be the load. Multiple = 2.\nPlayer 3 doesn't want to be the load.\nDo you want to be the load? [Y/N]");
+            printf("Player2 wants to be the load. Multiple = %d.\nPlayer 3 doesn't want to be the load.\nDo you want to be the load? [Y/N]", 2^multiple);
             char c;
             scanf("%c", c);
             if (c == 'Y' || c == 'y') {
                 multiple++;
                 player1.role = "load";
                 player2.role = "farmer";
-                printf("Multiple = 4.\nYou are the load now.");
+                printf("Multiple = %d.\nYou are the load now.", 2^multiple);
                 aftercallingload(player1, firstthree);
             } else {
                 printf("Player2 is the load now!");
@@ -92,14 +92,14 @@ int main() {
             }
         }
         if (player3.role == "load") {
-            printf("Player3 want to be the load. Multiple = 2.\nDo you want to be the load? [Y/N]");
+            printf("Player3 want to be the load. Multiple = %d.\nDo you want to be the load? [Y/N]", 2^multiple);
             char c;
             scanf("%c", c);
             if (c == 'Y') {
                 multiple++;
                 player1.role = "load";
                 player3.role = "farmer";
-                printf("Multiple = 4.\nPlayer2 doesn't want to be the load.\nYou are the load now.");
+                printf("Multiple = %d.\nPlayer2 doesn't want to be the load.\nYou are the load now.", 2^multiple);
                 aftercallingload(player1, firstthree);
             } else {
                 printf("Player1 don't want to be the load.\nPlayer2 doesn't want to be the load.\nPlayer3 is the load now!");
