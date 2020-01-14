@@ -39,10 +39,8 @@ int main(){
         deck[i-39].patt = "spade";
         deck[i].code = i+1;
     }
-    deck[52].num = 1;               //小王
-    deck[52].patt = "joker";
-    deck[53].num = 2;               //大王
-    deck[53].patt = "joker";
+    deck[52] = {1, "joker", 53};               //小王
+    deck[53] = {2, "joker", 54};               //大王
 
     player player1;
     player1.code = 1;
@@ -52,7 +50,7 @@ int main(){
     player3.code = 3;
 
 
-    card firstthree[3];             //开局三张牌
+    card firstthree[3];             //开局三张地主牌
 
     printf("shuffling...\n");
     shuffle(deck, player1, player2, player3, firstthree);   //洗牌
