@@ -1,19 +1,8 @@
 #include "stdio.h"
 #include <math.h>
 #include <stdlib.h>
-
-typedef struct _card {
-    char *patt; //花色 在这游戏里没啥用
-    int num;    //大小 
-    int code;   //代号 方便管理卡牌
-} card;
-
-typedef struct _player {
-    char *role;     //农民or地主
-    card hand[20];  //手牌
-    int numofhand;  //手牌数目
-    int code;       //玩家编号123
-} player;
+#include "struct.h"
+#include "function.h"
 
 
 int main() {
@@ -56,7 +45,7 @@ int main() {
 
     printf("shuffling...\n");
     shuffle(deck, player1, player2, player3, firstthree);   //洗牌
-
+    //FIXME 把循环的判定条件重写一遍
     printf("Game Start.\nYour cards are as the following.\n");
     for (int i = 0; i = 16; i++) printf("[i+1] %s %d\n", player1.hand[i]);
 

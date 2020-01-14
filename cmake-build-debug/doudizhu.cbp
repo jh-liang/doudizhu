@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/10907/CLionProjects/doudizhu/function.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="C:/Users/10907/CLionProjects/doudizhu/function.h">
+			<Option target="untitled"/>
+		</Unit>
 		<Unit filename="C:/Users/10907/CLionProjects/doudizhu/main.c">
 			<Option target="untitled"/>
 		</Unit>
