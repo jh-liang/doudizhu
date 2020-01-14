@@ -71,10 +71,10 @@ int aftercallingload(player playerx, card *firstthree) {       //叫完地主后
 
 //FIXME: 改循环的判定条件，上面已经帮你改过几个了
 int ordering(int amount, card cards[amount]) {           //排序牌组
-    for (int j = amount - 1; j = 0; j--) {  // 我不知道这边写的什么jb，第二个语句是循环执行条件，写成这样根本没法循环，后面也有好多
-        card a = cards[0];
+    for (int j = amount - 1; j >= 0; j--) {  // 我不知道这边写的什么jb，第二个语句是循环执行条件，写成这样根本没法循环，后面也有好多
+        card a = cards[0];                      //ljh:记错了 记成第二句是结束条件了。。。
         int a1 = 0;
-        for (int i = 0; i = j; i++) {   // 一样的问题
+        for (int i = 0; i <= j; i++) {   // 一样的问题
             if (cards[i].code < cards[i + 1].code) {
                 a = cards[i + 1];
                 a1 = i + 1;
@@ -93,7 +93,7 @@ int show(player playerx, card currentcard[13]) {         //出牌
 
     if (currentamount == 1) {           //单牌
         int cardcode = 0;
-        for (cardcode = 0; cardcode = 20; cardcode++) {
+        for (cardcode = 0; cardcode <= 19; cardcode++) {
             if (playerx.hand[cardcode].num > currentcard[0].num) {
                 break;
             }
@@ -101,12 +101,12 @@ int show(player playerx, card currentcard[13]) {         //出牌
         if (cardcode < 20) {
             currentcard[0] = playerx.hand[cardcode];
 
-            for (int i = 1; i = 19; i++) {
+            for (int i = 1; i <= 19; i++) {
                 currentcard[i].patt = "nocard";
                 currentcard[i].num = 0;
                 currentcard[i].code = 0;
             }
-            for (int i = cardcode; i = playerx.numofhand; i++) {
+            for (int i = cardcode; i <= playerx.numofhand; i++) {
                 playerx.hand[cardcode].patt = playerx.hand[cardcode + 1].patt;
                 playerx.hand[cardcode].num = playerx.hand[cardcode + 1].num;
                 playerx.hand[cardcode].code = playerx.hand[cardcode + 1].code;
@@ -121,7 +121,7 @@ int show(player playerx, card currentcard[13]) {         //出牌
         } else printf("Player %d cannot give out a card", playerx.code);
     } else if (currentamount == 2) {          //对子
         int cardcode = 0;
-        for (cardcode = 0; cardcode = 20; cardcode++) {
+        for (cardcode = 0; cardcode <= 20; cardcode++) {
             if (playerx.hand[cardcode].num > currentcard[0].num &&
                 playerx.hand[cardcode].num == playerx.hand[cardcode + 1].num) {
                 break;
@@ -133,15 +133,15 @@ int show(player playerx, card currentcard[13]) {         //出牌
             printf("Player %d gives out a pair. Current card is [1] %s %d [2] %s %d", playerx.code,
                    currentcard[0].patt, currentcard[0].num, currentcard[1].patt, currentcard[1].num);
             playerx.numofhand = -2;
-            for (int i = 2; i = 19; i++) {
+            for (int i = 2; i <= 19; i++) {
                 currentcard[i].patt = "nocard";
                 currentcard[i].num = 0;
                 currentcard[i].code = 0;
             }
-            for (int i = cardcode; i = 19; i++) {
+            for (int i = cardcode; i <= 19; i++) {
                 playerx.hand[cardcode] = playerx.hand[cardcode + 2];
             }
-            for (int i = playerx.numofhand; i = playerx.numofhand + 2; i++) {
+            for (int i = playerx.numofhand; i <= playerx.numofhand + 2; i++) {
                 playerx.hand[i].patt = "nocard";
                 playerx.hand[i].num = 0;
                 playerx.hand[i].code = 0;
@@ -149,7 +149,7 @@ int show(player playerx, card currentcard[13]) {         //出牌
         } else printf("Player %d cannot give out a pair", playerx.code);
     } else if (currentamount == 3) {          //三张
         int cardcode = 0;
-        for (cardcode = 0; cardcode = 20; cardcode++) {
+        for (cardcode = 0; cardcode <= 20; cardcode++) {
             if (playerx.hand[cardcode].num > currentcard[0].num &&
                 playerx.hand[cardcode].num == playerx.hand[cardcode + 1].num
                 && playerx.hand[cardcode + 1].num == playerx.hand[cardcode + 2].num) {
@@ -163,17 +163,17 @@ int show(player playerx, card currentcard[13]) {         //出牌
             printf("Player %d gives out a tri. Current card is [1] %s %d [2] %s %d",
                    playerx.code, currentcard[0].patt, currentcard[0].num, currentcard[1].patt, currentcard[1].num);
             playerx.numofhand = -2;
-            for (int i = 3; i = 19; i++) {
+            for (int i = 3; i <= 19; i++) {
                 currentcard[i].patt = "nocard";
                 currentcard[i].num = 0;
                 currentcard[i].code = 0;
             }
-            for (int i = cardcode; i = 19; i++) {
+            for (int i = cardcode; i <= 19; i++) {
                 playerx.hand[cardcode].patt = playerx.hand[cardcode + 3].patt;
                 playerx.hand[cardcode].num = playerx.hand[cardcode + 3].num;
                 playerx.hand[cardcode].code = playerx.hand[cardcode + 3].code;
             }
-            for (int i = playerx.numofhand; i = playerx.numofhand + 3; i++) {
+            for (int i = playerx.numofhand; i <= playerx.numofhand + 3; i++) {
                 playerx.hand[i].patt = "nocard";
                 playerx.hand[i].num = 0;
                 playerx.hand[i].code = 0;
@@ -187,7 +187,7 @@ int show(player playerx, card currentcard[13]) {         //出牌
             int cardcode1 = 0;
             int cardcode2 = 0;
             int cardcode3 = 0;
-            for (int i = 0; i = 20; i++) {
+            for (int i = 0; i <= 19; i++) {
                 if (playerx.hand[i].num == playerx.hand[i + 1].num &&
                     playerx.hand[i - 2].num == playerx.hand[i - 1].num &&
                     playerx.hand[i].num == playerx.hand[i - 1].num + 1) {
@@ -229,18 +229,18 @@ int show(player playerx, card currentcard[13]) {         //出牌
                        currentcard[3].patt, currentcard[3].num, currentcard[4].patt, currentcard[4].num,
                        currentcard[5].patt, currentcard[5].num);
                 playerx.numofhand = -6;
-                for (int i = 6; i = 19; i++) {
+                for (int i = 6; i <= 19; i++) {
                     currentcard[i].patt = "nocard";
                     currentcard[i].num = 0;
                     currentcard[i].code = 0;
                 }
-                for (int i = cardcode1; i = cardcode2; i++) {
+                for (int i = cardcode1; i <= cardcode2; i++) {
                     playerx.hand[cardcode1] = playerx.hand[cardcode1 + 2];
                 }
-                for (int i = cardcode2; i = cardcode3; i++) {
+                for (int i = cardcode2; i <= cardcode3; i++) {
                     playerx.hand[cardcode2] = playerx.hand[cardcode2 + 4];
                 }
-                for (int i = cardcode3; i = 19; i++) {
+                for (int i = cardcode3; i <= 19; i++) {
                     playerx.hand[cardcode3] = playerx.hand[cardcode3 + 6];
                 }
             } else printf("Player %d cannot give out a tri", playerx.code);
@@ -268,21 +268,21 @@ int countcard(int amount, card cards[20]) {              //数牌
 int wannengrow(player playerx, card currentcard[13], int currentamount) {        //顺子
     int handamount;
     int handcode[handamount];
-    for (int i = 0; i = handamount; i++) {
+    for (int i = 0; i <= handamount; i++) {
         handcode[i] = playerx.hand[i].num;
     }
 
     int currentarray[currentamount];
     int position[currentamount];                    //position是在array里面的坐标，第一个=0
 
-    for (int i = 0; i = currentamount; i++) {
+    for (int i = 0; i <= currentamount; i++) {
         if (position[i] != 0) continue;
         else find(currentcard[i].num, handcode, position[i]);
     }
 
     int foundindicator = 1;
 
-    for (int i = 0; i = currentamount; i++) {
+    for (int i = 0; i <= currentamount; i++) {
         if (position[i] == 0) {
             foundindicator = 0;
             break;
@@ -290,22 +290,22 @@ int wannengrow(player playerx, card currentcard[13], int currentamount) {       
     }
 
     if (foundindicator = 1) {
-        for (int i = 0; i = currentamount; i++) {
+        for (int i = 0; i <= currentamount; i++) {
             currentcard[i] = playerx.hand[position[i]];
         }
         printf("Player %d gives out a row. Current card is\n", playerx.code);
-        for (int i = 0; i = currentamount; i++) {
+        for (int i = 0; i <= currentamount; i++) {
             printf("[%d] %s %d\n", currentcard[0].patt, currentcard[0].num);
         }
         playerx.numofhand = -currentamount;
 
-        for (int i = currentamount; i = 19; i++) {
+        for (int i = currentamount; i <= 19; i++) {
             currentcard[i].patt = "nocard";
             currentcard[i].num = 0;
             currentcard[i].code = 0;
         }
-        for (int i = 0; i = currentamount; i++) {
-            for (int j = position[i]; j = position[i + 1]; j++) {
+        for (int i = 0; i <= currentamount; i++) {
+            for (int j = position[i]; j <= position[i + 1]; j++) {
                 playerx.hand[j] = playerx.hand[j + i + 1];
             }
         }
@@ -315,8 +315,8 @@ int wannengrow(player playerx, card currentcard[13], int currentamount) {       
 }
 
 
-int find(int target, int array[], int position) {            //找牌
-    for (int i = 0; i = 20; i++) {
+int find(int target, int array[], int position) {            //找牌     //XXX 这里不确定能不能这样写
+    for (int i = 0; i <= 19; i++) {
         if (target == array[i]) {
             position = i;
             break;
