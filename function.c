@@ -88,7 +88,7 @@ int ordering(int amount, card cards[amount]) {           //排序牌组
 
 
 int show(player playerx, card currentcard[13]) {         //出牌
-    int currentamount = 0;
+    int currentamount;
     countcard(currentamount, currentcard);
 
     if (currentamount == 1) {           //单牌
@@ -239,10 +239,20 @@ int show(player playerx, card currentcard[13]) {         //出牌
                 for (int i = cardcode3; i <= 19; i++) {
                     playerx.hand[cardcode3] = playerx.hand[cardcode3 + 6];
                 }
-            } else printf("Player %d cannot give out a tri", playerx.code);
+            } else printf("Player %d cannot give out a tri-pair", playerx.code);
         } else if (currentcard[0].num == currentcard[1].num && currentcard[3].num == currentcard[4].num &&
                    currentcard[1].num == currentcard[2].num && currentcard[4].num == currentcard[5].num &&
                    currentcard[2].num == currentcard[3].num + 1) {
+            int cardcode1 = 0;
+            int cardcode2 = 0;
+            for (int i = 0; i <= 19; i++){
+                if (playerx.hand[i].num == playerx.hand[i+1].num && playerx.hand[i+1].num == playerx.hand[i+2].num &&
+                    playerx.hand[i+3].num == playerx.hand[i+4].num && playerx.hand[i+4].num == playerx.hand[i+5].num &&
+                    playerx.hand[i+2].num == playerx.hand[i+3].num - 1 && playerx.hand[i+5].num != playerx.hand[i+6].num){
+                    cardcode1 = i;
+                    cardcode2 = i+3;
+                }
+            }
 
 
         }
@@ -279,13 +289,13 @@ int wannengrow(player playerx, card currentcard[13], int currentamount) {       
     int foundindicator = 1;
 
     for (int i = 0; i <= currentamount; i++) {
-        if (position[i] == 0) {
+        if (position[i] == 0){
             foundindicator = 0;
             break;
         }
     }
 
-    if (foundindicator = 1) {
+    if (foundindicator == 1) {
         for (int i = 0; i <= currentamount; i++) {
             currentcard[i] = playerx.hand[position[i]];
         }
