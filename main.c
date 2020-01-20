@@ -14,20 +14,21 @@ int main() {
         deck[i].code = i + 1;
     }
     for (int i = 13; i <= 25; i++) {
-        deck[i - 13].num = i;
-        deck[i - 13].patt = "club";
+        deck[i].num = i;
+        deck[i].patt = "club";
         deck[i].code = i + 1;
     }
     for (int i = 26; i <= 38; i++) {
-        deck[i - 26].num = i;
-        deck[i - 26].patt = "heart";
+        deck[i].num = i;
+        deck[i].patt = "heart";
         deck[i].code = i + 1;
     }
     for (int i = 39; i <= 51; i++) {
-        deck[i - 39].num = i;
-        deck[i - 39].patt = "spade";
+        deck[i].num = i;
+        deck[i].patt = "spade";
         deck[i].code = i + 1;
     }
+
     deck[52].code = 53;
     deck[52].num = 1;
     deck[52].patt = "joker";               //小王

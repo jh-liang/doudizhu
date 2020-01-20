@@ -15,18 +15,21 @@ int shuffle(card *deck, player player1, player player2, player player3, card *fi
 
     int sequence[54];
     for (int i = 0; i <= 53; i++) {
+        sequence[i] = i;
+    }
+    for (int i = 0; i <= 53; i++) {             //弄一个sequence数组，用rand函数把sequence里的数字交换54次
         int a = rand() % 53;
         int X = sequence[a];
         sequence[a] = sequence[i];
         sequence[i] = X;
     }
 
-    for (int i = 0; i <= 53; i++) {
+    for (int i = 0; i <= 53; i++) {             //把sequence代入deck里面，shuffled = 洗好的牌
         shuffled[i] = deck[sequence[i]];        //这里应该洗好牌了
     }
 
 
-    int b = rand() % 54;
+    int b = rand() % 54;                        //根据斗地主规则，从牌组里抽一张牌出来，亮牌后放回牌组，派牌后拿到明牌的先交地主
 
     card shown = shuffled[b];
 
@@ -53,7 +56,7 @@ int shuffle(card *deck, player player1, player player2, player player3, card *fi
     for (int i = 0; i <= 2; i++) {
         firstthree[i] = shuffled[i + 51];
     }
-    ordering(17, player1.hand);
+    ordering(17, player1.hand);             //排序各人的手牌
     ordering(17, player2.hand);
     ordering(17, player3.hand);
     ordering(3, firstthree);
