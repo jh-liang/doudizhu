@@ -16,10 +16,10 @@ int main() {
     }
 
     for (int i = 0; i <= 12; i++) {
-            deck[i].patt = 'diamond';
-            deck[i + 13].patt = 'club';
-            deck[i + 26].patt = 'heart';
-            deck[i + 39].patt = 'spade';
+            deck[i].patt = "diamond";
+            deck[i + 13].patt = "club";
+            deck[i + 26].patt = "heart";
+            deck[i + 39].patt = "spade";
         }
 
     deck[52].code = 53;

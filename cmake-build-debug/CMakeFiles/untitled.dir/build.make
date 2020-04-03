@@ -33,19 +33,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\10907\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\192.6817.32\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\user\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\193.5662.56\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\10907\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\192.6817.32\bin\cmake\win\bin\cmake.exe -E remove -f
+RM = C:\Users\user\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\193.5662.56\bin\cmake\win\bin\cmake.exe -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\10907\CLionProjects\doudizhu
+CMAKE_SOURCE_DIR = C:\Users\user\Desktop\CodePractice\ddz\doudizhu
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\10907\CLionProjects\doudizhu\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\user\Desktop\CodePractice\ddz\doudizhu\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/untitled.dir/depend.make
@@ -58,29 +58,29 @@ include CMakeFiles/untitled.dir/flags.make
 
 CMakeFiles/untitled.dir/main.c.obj: CMakeFiles/untitled.dir/flags.make
 CMakeFiles/untitled.dir/main.c.obj: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\10907\CLionProjects\doudizhu\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/untitled.dir/main.c.obj"
-	D:\Coding\x86_64-8.1\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\untitled.dir\main.c.obj   -c C:\Users\10907\CLionProjects\doudizhu\main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\user\Desktop\CodePractice\ddz\doudizhu\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/untitled.dir/main.c.obj"
+	D:\MinGW\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\untitled.dir\main.c.obj   -c C:\Users\user\Desktop\CodePractice\ddz\doudizhu\main.c
 
 CMakeFiles/untitled.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/untitled.dir/main.c.i"
-	D:\Coding\x86_64-8.1\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\10907\CLionProjects\doudizhu\main.c > CMakeFiles\untitled.dir\main.c.i
+	D:\MinGW\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\user\Desktop\CodePractice\ddz\doudizhu\main.c > CMakeFiles\untitled.dir\main.c.i
 
 CMakeFiles/untitled.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/untitled.dir/main.c.s"
-	D:\Coding\x86_64-8.1\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\10907\CLionProjects\doudizhu\main.c -o CMakeFiles\untitled.dir\main.c.s
+	D:\MinGW\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\user\Desktop\CodePractice\ddz\doudizhu\main.c -o CMakeFiles\untitled.dir\main.c.s
 
 CMakeFiles/untitled.dir/function.c.obj: CMakeFiles/untitled.dir/flags.make
 CMakeFiles/untitled.dir/function.c.obj: ../function.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\10907\CLionProjects\doudizhu\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/untitled.dir/function.c.obj"
-	D:\Coding\x86_64-8.1\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\untitled.dir\function.c.obj   -c C:\Users\10907\CLionProjects\doudizhu\function.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\user\Desktop\CodePractice\ddz\doudizhu\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/untitled.dir/function.c.obj"
+	D:\MinGW\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\untitled.dir\function.c.obj   -c C:\Users\user\Desktop\CodePractice\ddz\doudizhu\function.c
 
 CMakeFiles/untitled.dir/function.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/untitled.dir/function.c.i"
-	D:\Coding\x86_64-8.1\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\10907\CLionProjects\doudizhu\function.c > CMakeFiles\untitled.dir\function.c.i
+	D:\MinGW\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\user\Desktop\CodePractice\ddz\doudizhu\function.c > CMakeFiles\untitled.dir\function.c.i
 
 CMakeFiles/untitled.dir/function.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/untitled.dir/function.c.s"
-	D:\Coding\x86_64-8.1\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\10907\CLionProjects\doudizhu\function.c -o CMakeFiles\untitled.dir\function.c.s
+	D:\MinGW\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\user\Desktop\CodePractice\ddz\doudizhu\function.c -o CMakeFiles\untitled.dir\function.c.s
 
 # Object files for target untitled
 untitled_OBJECTS = \
@@ -96,7 +96,7 @@ untitled.exe: CMakeFiles/untitled.dir/build.make
 untitled.exe: CMakeFiles/untitled.dir/linklibs.rsp
 untitled.exe: CMakeFiles/untitled.dir/objects1.rsp
 untitled.exe: CMakeFiles/untitled.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\10907\CLionProjects\doudizhu\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable untitled.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\user\Desktop\CodePractice\ddz\doudizhu\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable untitled.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\untitled.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -109,6 +109,6 @@ CMakeFiles/untitled.dir/clean:
 .PHONY : CMakeFiles/untitled.dir/clean
 
 CMakeFiles/untitled.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\10907\CLionProjects\doudizhu C:\Users\10907\CLionProjects\doudizhu C:\Users\10907\CLionProjects\doudizhu\cmake-build-debug C:\Users\10907\CLionProjects\doudizhu\cmake-build-debug C:\Users\10907\CLionProjects\doudizhu\cmake-build-debug\CMakeFiles\untitled.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\user\Desktop\CodePractice\ddz\doudizhu C:\Users\user\Desktop\CodePractice\ddz\doudizhu C:\Users\user\Desktop\CodePractice\ddz\doudizhu\cmake-build-debug C:\Users\user\Desktop\CodePractice\ddz\doudizhu\cmake-build-debug C:\Users\user\Desktop\CodePractice\ddz\doudizhu\cmake-build-debug\CMakeFiles\untitled.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/untitled.dir/depend
 
