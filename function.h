@@ -10,16 +10,22 @@
 #include <stdlib.h>
 #include "struct.h"
 
-int shuffle(card deck[54], player player1, player player2, player player3, card firstthree[3]);
+card* shuffle(card *deck);
 //used to shuffle at the beginning of the game
 
-int aftercallingload(player playerx, card firstthree[3]);
+player distributing(card *deck, player playerx, int playercode);
+//distributing cards to players.
+
+card* shufflethefirstthree(card *deck, card *firstthree);
+//used to shuffle the first three load card at the beginning.
+
+player aftercallingload(player playerx, card firstthree[3]);
 //a response action to the player which become load
 
-int ordering(int amount, card cards[amount]);
+card* ordering(card *cards);
 //used to make the card group in order
 
-int NPCshow(player playerx, card currentcard[13], int othernoshow);
+card* NPCshow(player playerx, card *currentcard);
 //NPC showing card
 
 int countcard(card cards[20]);
@@ -28,11 +34,11 @@ int countcard(card cards[20]);
 int wannengrow(player playerx, card currentcard[13], int currentamount);
 //row of any number >= 5
 
-int findpos(int target, int cardarray[], int position);
+int findpos(int target, int cardarray[]);
 //find the position of a card in a cardgroup
 
-int find(card target[20], card from[20]);
+card *find(card *currentcard, card *handcard);
 
-int printcurrentcard(player playerx, card currentcard[13]);
+int printcurrentcard(player playerx, card *currentcard);
 
 #endif //DOUDIZHU_FUNCTION_H

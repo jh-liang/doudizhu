@@ -6,12 +6,29 @@
 
 
 
-int shuffle(card *deck, player player1, player player2, player player3, card *firstthree) {     //开局洗牌
-    player1.numofhand = 17;
-    player2.numofhand = 17;
-    player3.numofhand = 17;
+card* shuffle(card *deck) {     //开局洗牌
+    for (int j = 0; j <= 3 ; j++){            //现在大小是1-13 没有AJQK 懒 以后再弄
+        for (int i = 0; i <= 12; i++) {
+            deck[i + j*13].num = i;
+            deck[i + j*13].code = i + j * 13 + 1;
+        }
+    }
 
-    card shuffled[54];      //要洗的牌
+    for (int i = 0; i <= 12; i++) {
+        deck[i].patt = "diamond";
+        deck[i + 13].patt = "club";
+        deck[i + 26].patt = "heart";
+        deck[i + 39].patt = "spade";
+    }
+
+    deck[52].code = 53;
+    deck[52].num = 1;
+    deck[52].patt = "joker";               //小王
+    deck[53].code = 54;
+    deck[53].num = 2;
+    deck[53].patt = "joker";               //大王
+
+
 
     int sequence[54];
     for (int i = 0; i <= 53; i++) {
@@ -25,55 +42,44 @@ int shuffle(card *deck, player player1, player player2, player player3, card *fi
     }
 
     for (int i = 0; i <= 53; i++) {             //把sequence代入deck里面，shuffled = 洗好的牌
-        shuffled[i] = deck[sequence[i]];        //这里应该洗好牌了
+        deck[i] = deck[sequence[i]];        //这里应该洗好牌了
     }
+}
 
-
-    int b = rand() % 54;                        //根据斗地主规则，从牌组里抽一张牌出来，亮牌后放回牌组，派牌后拿到明牌的先叫地主
-
-    card shown = shuffled[b];
-
+player distributing(card *deck, player playerx, int playercode) {
     for (int i = 0; i <= 16; i++) {
-        player1.hand[i] = shuffled[i];
-        player2.hand[i] = shuffled[i + 17];
-        player3.hand[i] = shuffled[i + 34];
-        if (i == b) {
-            player1.role = "load"; player2.role = "farmer"; player3.role = "farmer";
-        }
-        if ((i+17) == b) {
-            player1.role = "farmer"; player2.role = "load"; player3.role = "farmer";
-        }
-        if ((i+34) == b) {
-            player1.role = "farmer"; player2.role = "farmer"; player3.role = "load";
-        }
-    }
-    for (int i = 0; i <= 2; i++) {
-        firstthree[i] = shuffled[i + 51];
+        playerx.hand[i] = deck[i + (playercode - 1) * 13];
+        if (playerx.hand[i].code == 15) playerx.role = "Load";
+        else playerx.role = "Farmer";
     }
     for (int i = 17; i <= 19; i++) {
-        player1.hand[i].code = 0;
-        player2.hand[i].code = 0;
-        player3.hand[i].code = 0;
+        playerx.hand[i].code = 0;
     }
-    ordering(countcard(player1.hand), player1.hand);             //排序各人的手牌
-    ordering(countcard(player2.hand), player2.hand);
-    ordering(countcard(player3.hand), player3.hand);
-    ordering(3, firstthree);
-    return 0;
+    playerx.hand = ordering(playerx.hand);
+    return playerx;
+}
+
+card* shufflethefirstthree(card *deck, card firstthree[3]){
+    for (int i = 0; i <= 2; i++) {
+        firstthree[i] = deck[i + 51];
+    }
+    firstthree = ordering(firstthree);
+    return firstthree;
 }
 
 
 
-int aftercallingload(player playerx, card firstthree[3]) {       //叫完地主后派地主牌
+player aftercallingload(player playerx, card firstthree[3]) {       //叫完地主后派地主牌
     playerx.hand[17] = firstthree[0];
     playerx.hand[18] = firstthree[1];
     playerx.hand[19] = firstthree[2];
     playerx.numofhand+=3;
-    return 0;
+    return playerx;
 }
 
 //FIXME: 改循环的判定条件，上面已经帮你改过几个了
-int ordering(int amount, card cards[amount]) {           //排序牌组
+card* ordering(card *cards){           //排序牌组
+    int amount = countcard(cards);
     for (int j = amount - 1; j >= 0; j--) {  // 我不知道这边写的什么jb，第二个语句是循环执行条件，写成这样根本没法循环，后面也有好多
         card a = cards[0];                      //ljh:记错了 记成第二句是结束条件了。。。
         int a1 = 0;
@@ -87,16 +93,12 @@ int ordering(int amount, card cards[amount]) {           //排序牌组
         cards[a1] = cards[j];
         cards[j] = cardsx;
     }
+    return cards;
 }
 
 
-int NPCshow(player playerx, card currentcard[13], int othernoshow){ 
+card* NPCshow(player playerx, card *currentcard){
     int currentamount = countcard(currentcard);
-
-    if (othernoshow == 2){
-
-    }
-
     if (currentamount == 1) {           //单牌
         int cardcode = 0;
         for (cardcode = 0; cardcode <= 19; cardcode++) {
@@ -105,18 +107,18 @@ int NPCshow(player playerx, card currentcard[13], int othernoshow){
                 break;
         }
         if (cardcode < 20) {
-            currentcard[0] = playerx.hand[cardcode];
-            for (int i = 1; i <= 19; i++) {
-                currentcard[i].code = 0;
-            }
-            playerx.numofhand--;
-            for (int i = cardcode; i <= playerx.numofhand - 1; i++) {
-                playerx.hand[i] = playerx.hand[i + 1];
-            }
-            printcurrentcard(playerx, currentcard);
-            playerx.hand[playerx.numofhand].code = 0;
+                currentcard[0] = playerx.hand[cardcode];
+                for (int i = 1; i <= 19; i++) {
+                    currentcard[i].code = 0;
+                }
+                playerx.numofhand--;
+                for (int i = cardcode; i <= playerx.numofhand - 1; i++) {
+                    playerx.hand[i] = playerx.hand[i + 1];
+                }
+                printcurrentcard(playerx, currentcard);
+                playerx.hand[playerx.numofhand].code = 0;
 
-            othernoshow = 0;
+                othernoshow = 0;
         }
         else{
             printf("Player %d cannot give out a card", playerx.code);
@@ -212,7 +214,6 @@ int NPCshow(player playerx, card currentcard[13], int othernoshow){
                     playerx.hand[i + 3].num == playerx.hand[i + 4].num + 1){
                     cardcode1 = i; cardcode2 = i+2; cardcode3 = i+4; break;
                 }
-            };
             }
             if (cardcode3 != 0) {
                 currentcard[0] = playerx.hand[cardcode1];
@@ -261,10 +262,11 @@ int NPCshow(player playerx, card currentcard[13], int othernoshow){
 
 
     }else wannengrow(playerx, currentcard, currentamount);
+    return currentcard;
 }
 
 
-int countcard(card cards[20]) {              //数牌
+int countcard(card *cards) {              //数牌
     int amount = 0;
     while (amount < 20) {
         if (cards[amount].num != 0) amount++;
@@ -286,7 +288,7 @@ int wannengrow(player playerx, card currentcard[13], int currentamount) {       
 
     for (int i = 0; i <= currentamount; i++) {
         if (position[i] != 0) continue;
-        else findpos(currentcard[i].num, handcode, position[i]);
+        else position[i] = findpos(currentcard[i].num, handcode);
     }
 
     int foundindicator = 1;
@@ -324,39 +326,40 @@ int wannengrow(player playerx, card currentcard[13], int currentamount) {       
 }
 
 
-int findpos(int target, int cardarray[], int position) {            //找牌     //XXX 这里不确定能不能这样写
+int findpos(int target, int cardarray[]) {            //找牌     //XXX 这里不确定能不能这样写
+    int position;
     for (int i = 0; i <= 19; i++) {
         if (target == cardarray[i]) {
             position = i;
             break;
         }
     }
+    return position;
 }
 
 
-int findpos(card target[20], card prey[20]){
-    int amount;
-    amount = countcard(target);
-    int pattern[] = {0};
+card *find(card *currentcard, card *handcard){
+    int amount = countcard(currentcard);
+    int *pattern = {0};
     for (int i = 0; i <= amount - 1; i++){
-        pattern[i] = target[i].num;
+        pattern[i] = currentcard[i].num;
     }
-    int value[] = {0};
-    int quatity[] = {0};
+    int *value = {0};
+    int *quatity = {0};
     int hh = 0;
     for (int i = 0; i <= (amount - 1); i++){
         if (pattern[i] == pattern[i+1]){
             value[hh] = pattern[i];
             quatity[hh]++;
         }
-        else hh++;
+        else hh++;                            //hh = len of value and quatity
     }
 
     int pamount;
-    pamount = countcard(prey);
+    pamount = countcard(handcard);
     int ppattern[] = {0};
     for (int i = 0; i <= pamount - 1; i++){
-        ppattern[i] = prey[i].num;
+        ppattern[i] = handcard[i].num;
     }
     int pvalue[] = {0};
     int pquatity[] = {0};
@@ -366,23 +369,79 @@ int findpos(card target[20], card prey[20]){
             pvalue[phh] = ppattern[i];
             pquatity[phh]++;
         }
-        else phh++;
+        else phh++;                            //phh = len of pvalue and pquatity
     }
 
-    int new[];
-
-    for (int i = 0; i <= hh - 1; i++){
-        for (int j = 0; j <= phh - 1; j++){
-            
-
-
+    int lhh = 0;
+    int *lvalue;
+    int *lquatity;
+    for (int j = 0; j <= phh - 1; j++){
+        if (pvalue[j] > value[0]){
+            for (int k = 0; k <= (phh - j - 1); k++) {
+                lquatity[k] = pquatity[j];
+                lvalue[k] = pvalue[j];
+            }
+            lhh = phh - j;
+            break;
         }
+    }
 
+    card *show = {0};
 
+    if (lhh < hh) return show;
+
+    int *dvalue;
+    dvalue[0] = quatity[0];
+    for (int i = 1; i <= hh - 1; i++) {
+        dvalue[i] = quatity[i + 1] - quatity[i];
+    }
+
+    int *dlvalue;
+    dlvalue[0] = lquatity[0];
+    for (int i = 1; i <= lhh - 1; i++) {
+        dlvalue[i] = lquatity[i + 1] - lquatity[i];
     }
 
 
-    return 0;
+    int *new = {0};
+    int nhh = 0;
+
+    for (int i = 1; i <= lhh - 1; i++){
+        for (int j = 1; j <= hh - 1; j++){
+            if (dlvalue[i + j] == dvalue[j] && quatity[i + j] <= pquatity[j] && quatity[i + j]+1 >= pquatity[j]){
+                new[lhh] = value[i];
+                nhh++;
+            }
+        }
+        if (nhh == amount) break;
+    }
+
+    if (nhh != amount) return show;
+
+
+    for (int i = 0; i <= (amount-1); i++){
+        for (int j = 0; j <= (pamount-1); j++) {
+            if (handcard[j].num == new[i]) {
+                show[i] = handcard[j];
+                for (int k = j; k <= (pamount-1); k++) {
+                    handcard[k] = handcard[k + 1];
+                }
+                pamount--;
+                //printcurrentcard(playerx, currentcard);
+                handcard[pamount-1].code = 0;
+                //othernoshow = 0;
+                break;
+            }
+        }
+    }
+
+    for (int i = nhh; i <= 19; i++) {
+        show[i].code = 0;
+        show[i].num = 0;
+        show[i].patt = "diamond";
+    }
+
+    return show;
 }
 
 
@@ -392,7 +451,7 @@ int findpos(card target[20], card prey[20]){
 
 
 
-int printcurrentcard(player playerx, card currentcard[13]){
+int printcurrentcard(player playerx, card *currentcard){
     int currentamount = countcard(currentcard);
     printf("Player %d gives out %d card(s). Current card is (are)", playerx.code, currentamount);
     for (int i = 0; i <= currentamount - 1; i++){
