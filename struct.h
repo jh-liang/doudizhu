@@ -11,6 +11,12 @@ typedef struct _card {
     int code;   //代号 方便管理卡牌
 } card;
 
+typedef struct _current {
+    card* cards;    //card的一种
+    int special;    //for special card cases not covered in "find" function
+    int multiple;   //count the multiple
+} current;
+
 typedef struct _player {
     char *role;     //农民or地主
     card *hand;  //手牌
