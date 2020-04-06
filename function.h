@@ -8,7 +8,9 @@
 #include "stdio.h"
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 #include "struct.h"
+#include <time.h>
 
 card* shuffle(card *deck);
 //used to shuffle at the beginning of the game
@@ -40,7 +42,7 @@ card *find(card *currentcard, card *handcard);
 
 int printcurrentcard(player playerx, card *currentcard);
 
-card *findconst(const card sample[], card *handcard);
+card *findconst(const card sample[], card *handcard, int length);
 
 #endif //DOUDIZHU_FUNCTION_H
 
