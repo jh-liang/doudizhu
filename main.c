@@ -89,6 +89,7 @@ int main() {
             if ((player2.cannotshow == 1 && player3.cannotshow == 1) || currentcard.cards[0].num == 0){
                 currentcard = NPCshow_othernoshow(player1, currentcard);
                 player1 = aftershowing(player1, currentcard.cards);
+                printf("Checkpoint3\n");
             }else{
                 currentcard = NPCshow(player1, currentcard);
                 player1 = aftershowing(player1, currentcard.cards);
