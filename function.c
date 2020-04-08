@@ -37,11 +37,6 @@ const card row_sample_12[12] = {
         {"diamond", 4, 13}, {"diamond", 5, 17}, {"diamond", 6, 21},
         {"diamond", 7, 25}, {"diamond", 8, 29}, {"diamond", 9, 33},
         {"diamond", 10, 37}, {"diamond", 11, 41},{"diamond", 12, 45}};
-const card triple_sample[3] = {
-        {"diamond", 1, 1}, {"club", 1, 2}, {"heart", 1, 3}};
-const card bomb_sample[4] = {
-        {"diamond", 1, 1}, {"club", 1, 2}, {"heart", 1, 3},
-        {"spade", 1, 4}};
 const card bombplustwo_sample[6] = {
         {"diamond", 1, 1}, {"club", 1, 2}, {"heart", 1, 3},
         {"spade", 1, 4}, {"diamond", 2, 5}, {"club", 2, 6}};
@@ -57,6 +52,15 @@ const card bombplustwo_sample_4[6] = {
 const card tripair_sample[6] = {
         {"diamond", 1, 1}, {"club", 1, 2}, {"diamond", 2, 5},
         {"club", 2, 6}, {"diamond", 3, 9}, {"club", 3, 10}};
+const card quapair_sample[8] = {
+        {"diamond", 1, 1}, {"club", 1, 2}, {"diamond", 2, 5},
+        {"club", 2, 6}, {"diamond", 3, 9}, {"club", 3, 10},
+        {"diamond", 4, 13}, {"club", 4, 14}};
+const card pentapair_sample[10] = {
+        {"diamond", 1, 1}, {"club", 1, 2}, {"diamond", 2, 5},
+        {"club", 2, 6}, {"diamond", 3, 9}, {"club", 3, 10},
+        {"diamond", 4, 13}, {"club", 4, 14}, {"diamond", 5, 17},
+        {"club", 5, 18}};
 const card twotriple_sample[6] = {
         {"diamond", 1, 1}, {"club", 1, 2}, {"heart", 1, 3},
         {"diamond", 2, 5}, {"club", 2, 6}, {"heart", 2, 7}};
@@ -98,6 +102,7 @@ card* shuffle(card *deck) {     //开局洗牌
     for (int i = 0; i <= 53; i++) {
         sequence[i] = i;
     }
+
     srand(time(NULL));
     for (int i = 0; i <= 53; i++) {             //弄一个sequence数组，用rand函数把sequence里的数字交换54次
         int a = rand() % 53;
@@ -117,7 +122,6 @@ card* shuffle(card *deck) {     //开局洗牌
 
     free(XX);
     free(sequence);
-
     return deck;
 }
 
@@ -188,97 +192,101 @@ card* ordering(card *cards){           //排序牌组
 current NPCshow(player playerx, current currentcard){
     if (currentcard.special == 0){     //单牌、对子、三张、顺子、连对、飞机、三带二
         currentcard.cards = find(currentcard.cards, playerx.hand);
+
+        for (int i = 0; i <= 16; i++){
+            printf("'''''''''''''''%d,,%d,,%s''''\n", i+1, playerx.hand[i].num, playerx.hand[i].patt);
+        }
+
+        for (int i = 0; i <= 19; i++){
+            printf("%d,,%d,,%s''''\n", i+1, currentcard.cards[i].num, currentcard.cards[i].patt);
+        }
+
+        if (currentcard.cards[0].num == 0) memset(currentcard.cards, 0,20* sizeof(card));
     }
     else{
-        currentcard.cards = 0;
+        memset(currentcard.cards, 0, 20* sizeof(card));
     }
     return currentcard;
 }
 
 current NPCshow_othernoshow(player playerx, current currentcard){
     int amount = countcard(playerx.hand);
-    card* new = calloc(amount, sizeof(card));
+    memset(currentcard.cards, 0, 20* sizeof(card));
 
-    new = findconst(row_sample_12, playerx.hand, sizeof(row_sample_12)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(row_sample_11, playerx.hand, sizeof(row_sample_11)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(row_sample_10, playerx.hand, sizeof(row_sample_10)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
+    currentcard.cards = findconst(row_sample_12, playerx.hand, 12);
+    if (currentcard.cards[0].num != 0) {return currentcard;}
+    currentcard.cards = findconst(row_sample_11, playerx.hand, 11);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(row_sample_10, playerx.hand, 10);
+    if (currentcard.cards[0].num != 0) return currentcard;
 
-    new = findconst(threetriple_sample, playerx.hand, sizeof(threetriple_sample)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(threeplustwo_sample_1, playerx.hand, sizeof(threeplustwo_sample_1)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(threeplustwo_sample_2, playerx.hand, sizeof(threeplustwo_sample_2)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(twotriple_sample, playerx.hand, sizeof(twotriple_sample)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(tripair_sample, playerx.hand, sizeof(tripair_sample)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
+    currentcard.cards = findconst(threetriple_sample, playerx.hand, 9);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(twotriple_sample, playerx.hand, 6);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(pentapair_sample, playerx.hand, 10);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(quapair_sample, playerx.hand, 8);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(tripair_sample, playerx.hand, 6);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(threeplustwo_sample_1, playerx.hand, 5);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(threeplustwo_sample_2, playerx.hand, 5);
+    if (currentcard.cards[0].num != 0) return currentcard;
 
-    new = findconst(row_sample_9, playerx.hand, sizeof(row_sample_9)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(row_sample_8, playerx.hand, sizeof(row_sample_8)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(row_sample_7, playerx.hand, sizeof(row_sample_7)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(row_sample_6, playerx.hand, sizeof(row_sample_6)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    new = findconst(row_sample_5, playerx.hand, sizeof(row_sample_5)/sizeof(card));
-    if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
+    currentcard.cards = findconst(row_sample_9, playerx.hand, 9);
+    if (currentcard.cards[0].num != 0) {return currentcard;}
+    currentcard.cards = findconst(row_sample_8, playerx.hand, 8);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(row_sample_7, playerx.hand, 7);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(row_sample_6, playerx.hand, 6);
+    if (currentcard.cards[0].num != 0) return currentcard;
+    currentcard.cards = findconst(row_sample_5, playerx.hand, 5);
+    if (currentcard.cards[0].num != 0) return currentcard;
 
-    printf("Checkpoint 6\n");
+//    if (amount == 4 && playerx.numofhand <= 8) {
+//        currentcard.cards = findconst(bomb_sample, playerx.hand, sizeof(bomb_sample)/sizeof(card));
+//        if (currentcard.cards[0].num != 0) {
+//            currentcard.cards = currentcard.cards;
+//            printf("Checkpoint 4\n");
+//            free(currentcard.cards); return currentcard;
+//        }
+//    }
 
-
-    if (amount == 4) {
-        new = findconst(bomb_sample, playerx.hand, sizeof(bomb_sample)/sizeof(card));
-        if (new[0].num != 0) {
-            currentcard.cards = new;
-            printf("Checkpoint 4\n");
-            return currentcard;
-        }
+    if (amount == 6 && playerx.numofhand == 6) {
+        currentcard.cards = findconst(bombplustwo_sample, playerx.hand, 6);
+        if (currentcard.cards[0].num != 0) return currentcard;
+        currentcard.cards = findconst(bombplustwo_sample_2, playerx.hand, 6);
+        if (currentcard.cards[0].num != 0) return currentcard;
+        currentcard.cards = findconst(bombplustwo_sample_3, playerx.hand, 6);
+        if (currentcard.cards[0].num != 0) return currentcard;
+        currentcard.cards = findconst(bombplustwo_sample_4, playerx.hand, 6);
+        if (currentcard.cards[0].num != 0) return currentcard;
     }
 
-    if (amount == 6) {
-        new = findconst(bombplustwo_sample, playerx.hand, sizeof(bombplustwo_sample)/sizeof(card));
-        if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-        new = findconst(bombplustwo_sample_2, playerx.hand, sizeof(bombplustwo_sample_2)/sizeof(card));
-        if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-        new = findconst(bombplustwo_sample_3, playerx.hand, sizeof(bombplustwo_sample_3)/sizeof(card));
-        if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-        new = findconst(bombplustwo_sample_4, playerx.hand, sizeof(bombplustwo_sample_4)/sizeof(card));
-        if (new[0].num != 0) {currentcard.cards = new; return currentcard;}
-    }
-
-    for (int i = 0; i <= countcard(playerx.hand); i++){
-        printf("%d %s????\n", playerx.hand[i].num, playerx.hand[i].patt);
-    }
+    memset(currentcard.cards, 0, 20* sizeof(card));
 
     for (int i = 0; i <= amount - 1; i++) {
         if (playerx.hand[i].num < 8 && playerx.hand[i].num != playerx.hand[i+1].num){
-            new[0] = playerx.hand[i];
+            currentcard.cards[0] = playerx.hand[i];
             break;
         }
         else if (playerx.hand[i].num < 8 && playerx.hand[i].num == playerx.hand[i+1].num){
-            new[0] = playerx.hand[i];
-            new[1] = playerx.hand[i + 1];
+            currentcard.cards[0] = playerx.hand[i];
+            currentcard.cards[1] = playerx.hand[i + 1];
             break;
         }
         else if (playerx.hand[i].num < 8 && playerx.hand[i].num == playerx.hand[i+1].num
                 && playerx.hand[i+1].num == playerx.hand[i+2].num){
-            new[0] = playerx.hand[i];
-            new[1] = playerx.hand[i + 1];
-            new[2] = playerx.hand[i + 2];
+            currentcard.cards[0] = playerx.hand[i];
+            currentcard.cards[1] = playerx.hand[i + 1];
+            currentcard.cards[2] = playerx.hand[i + 2];
             break;
         }
     }
-
-    printf("Checkpoint 6\n");
-
-    currentcard.cards = new;
     currentcard.special = 0;
-    free(new);
     return currentcard;
 }
 
@@ -376,7 +384,7 @@ card *find(card *currentcard, card *handcard){
         }
     }
 
-    card *show = calloc(length, sizeof(int));
+    card *show = calloc(20, sizeof(card));
 
     if (lhh < hh) {
         handcard = show;
@@ -384,6 +392,8 @@ card *find(card *currentcard, card *handcard){
         free(pattern); free(quatity); free(value);
         free(ppattern); free(pquatity); free(pvalue);
         free(lquatity); free(lvalue);
+        handcard[0].num = 0;
+        printf("checkpoint2\n");
         return handcard;
     }
 
@@ -437,6 +447,8 @@ card *find(card *currentcard, card *handcard){
         free(quatity);
         free(show);
         free(new);
+        handcard[0].num = 0;
+        printf("Checkpoint1\n");
         return handcard;
     }
 
@@ -475,15 +487,14 @@ card *find(card *currentcard, card *handcard){
         show[i].patt = "diamond";
     }
 
-    free(sum);
-    free(newarray);
-    free(quatity);
+    free(sum); free(newarray);
+    free(quatity); free(show); free(new);
     handcard = show;
-    free(show);
-    free(new);
+
+    printf("CHECKPOINT//////%d\n", handcard[0].num);
+
     return handcard;
 }
-
 
 int printcurrentcard(player playerx, card *currentcard){
     int currentamount = countcard(currentcard);
@@ -494,6 +505,7 @@ int printcurrentcard(player playerx, card *currentcard){
             printf("[%d] %s %d\n", i + 1, currentcard[i].patt, currentcard[i].num);
         }
     }
+    printf("Player %d has %d cards left.\n", playerx.code, playerx.numofhand);
     return 0;
 }
 
@@ -547,7 +559,7 @@ card *findconst(const card sample[], card *handcard, int length) {
     int *lvalue = calloc(pamount, sizeof(int));
     int *lquatity = calloc(pamount, sizeof(int));
     for (int j = 0; j <= phh; j++){
-        if (pvalue[j] > value[0]){
+        if (pvalue[j] >= value[0]){
             for (int k = 0; k <= (phh - j); k++) {
                 lquatity[k] = pquatity[j+k];
                 lvalue[k] = pvalue[j+k];
@@ -557,7 +569,7 @@ card *findconst(const card sample[], card *handcard, int length) {
         }
     }
 
-    card *show = calloc(length, sizeof(card));
+    card *show = calloc(20, sizeof(card));
 
     if (lhh < hh) {
         handcard = show;
@@ -662,7 +674,59 @@ card *findconst(const card sample[], card *handcard, int length) {
     free(quatity); free(show); free(new);
     handcard = show;
 
-    printf("CHECKPOINT//////\n");
-
     return handcard;
 }
+
+
+//
+//int givingout_cards(player player_1st, player player_2nd, player player_3rd, current currentcard){
+//
+//    printf("Player %d is trying to show cards.\n", player_1st.code);
+//    if (player_1st.code == 1) givingout_cards_sub_2_3(player_1st, player_2nd, player_3rd, currentcard);
+//    if (player_1st.code == 2 || player_1st.code == 3) givingout_cards_sub_2_3(player_1st, player_2nd, player_3rd, currentcard);
+//
+//    printf("Player %d is trying to show cards.\n", player_2nd.code);
+//    if (player_2nd.code == 1) givingout_cards_sub_2_3(player_2nd, player_3rd, player_1st, currentcard);
+//    if (player_2nd.code == 2 || player_2nd.code == 3) givingout_cards_sub_2_3(player_2nd, player_3rd, player_1st, currentcard);
+//
+//    printf("Player %d is trying to show cards.\n", player_3rd.code);
+//    if (player_3rd.code == 1) givingout_cards_sub_2_3(player_3rd, player_1st, player_2nd, currentcard);
+//    if (player_3rd.code == 2 || player_3rd.code == 3) givingout_cards_sub_2_3(player_3rd, player_1st, player_2nd, currentcard);
+//
+//    return 0;
+//}
+//
+//int givingout_cards_sub_1(player player1, player playerx1, player playerx2, current currentcard) {
+//    if (playerx1.cannotshow == 1 && playerx2.cannotshow == 1){
+//        printf("You can give out cards in any combination.\n");
+//        for (int i = 0; i <= player1.numofhand - 1; i++){
+//            printf("[%d] %d %s\n", i+1, player1.hand[i].num, player1.hand[i].patt);
+//        }
+//        printf("Please give me your choice. (e.g. 1, 2, 3, 4)\n");
+//        char* ans = calloc(60, sizeof(char));
+//        scanf(ans);
+//        player1 = aftershowing(player1, currentcard.cards);
+//    }else{
+//        printf("Do you have any combination larger than it?\n");
+//        for (int i = 0; i <= player1.numofhand - 1; i++){
+//            printf("[%d] %d %s\n", i+1, player1.hand[i].num, player1.hand[i].patt);
+//        }
+//        printf("Please give me your choice. (e.g. 1, 2, 3, 4)\n");
+//
+//        player1 = aftershowing(player1, currentcard.cards);
+//    }
+//    printcurrentcard(player1, currentcard.cards);
+//    return 0;
+//}
+//
+//int givingout_cards_sub_2_3(player player1, player playerx1, player playerx2, current currentcard){
+//    if (playerx1.cannotshow == 1 && playerx2.cannotshow == 1){
+//        currentcard = NPCshow_othernoshow(player1, currentcard);
+//        player1 = aftershowing(player1, currentcard.cards);
+//    }else{
+//        currentcard = NPCshow(player1, currentcard);
+//        player1 = aftershowing(player1, currentcard.cards);
+//    }
+//    printcurrentcard(player1, currentcard.cards);
+//    return 0;
+//}

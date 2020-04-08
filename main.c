@@ -3,10 +3,9 @@
 int main() {
     card *deck = calloc(54, sizeof(card));  //所有牌
 
-
-    player player1 = {"", calloc(17, sizeof(card)),17, 1, 0};
-    player player2 = {"", calloc(17, sizeof(card)),17, 2, 0};
-    player player3 = {"", calloc(17, sizeof(card)),17, 3, 0};
+    player player1 = {"", calloc(17, sizeof(card)),17, 1, 1};
+    player player2 = {"", calloc(17, sizeof(card)),17, 2, 1};
+    player player3 = {"", calloc(17, sizeof(card)),17, 3, 1};
 
     card *firstthree = calloc(54, sizeof(card));             //开局三张地主牌
     printf("shuffling...\n");
@@ -23,7 +22,7 @@ int main() {
     printf("The Load cards are as the following.\n");
     for (int i = 0; i <= 2; i++) printf("[%d] %s %d\n", i + 1, firstthree[i].patt, firstthree[i].num);
 
-    current currentcard = {calloc(20, sizeof(currentcard)), 0, 0};                 //牌桌上现在的牌组
+    current currentcard = {calloc(20, sizeof(card)), 0, 0};                 //牌桌上现在的牌组
     
 
     if (strncmp(player1.role, "Load", 4) == 0) {    //Load = 地主
@@ -86,16 +85,17 @@ int main() {
     while (player1.numofhand > 0 || player2.numofhand > 0 || player3.numofhand > 0) {
         if (strncmp(player1.role, "Load", 4) == 0){
             printf("Player 1 is trying to show cards.\n");
-            if ((player2.cannotshow == 1 && player3.cannotshow == 1) || currentcard.cards[0].num == 0){
+            if (player2.cannotshow == 1 && player3.cannotshow == 1){
                 currentcard = NPCshow_othernoshow(player1, currentcard);
-                player1 = aftershowing(player1, currentcard.cards);
                 printf("Checkpoint3\n");
+                player1 = aftershowing(player1, currentcard.cards);
+                printf("Checkpoint4\n");
+
             }else{
                 currentcard = NPCshow(player1, currentcard);
                 player1 = aftershowing(player1, currentcard.cards);
             }
             printcurrentcard(player1, currentcard.cards);
-
 
             printf("Player 2 is trying to show cards.\n");
             if (player1.cannotshow == 1 && player3.cannotshow == 1){
@@ -106,7 +106,6 @@ int main() {
                 player2 = aftershowing(player2, currentcard.cards);
             }
             printcurrentcard(player2, currentcard.cards);
-
 
             printf("Player 3 is trying to show cards.\n");
             if (player1.cannotshow == 1 && player2.cannotshow == 1){
@@ -121,7 +120,7 @@ int main() {
 
         else if (strncmp(player2.role, "Load", 4) == 0){
             printf("Player 2 is trying to show cards.\n");
-            if ((player1.cannotshow == 1 && player3.cannotshow == 1) || currentcard.cards[0].num == 0){
+            if (player1.cannotshow == 1 && player3.cannotshow == 1){
                 currentcard = NPCshow_othernoshow(player2, currentcard);
                 player2 = aftershowing(player2, currentcard.cards);
             }else{
@@ -154,7 +153,7 @@ int main() {
         }
         else{
             printf("Player 3 is trying to show cards.\n");
-            if ((player1.cannotshow == 1 && player2.cannotshow == 1) || currentcard.cards[0].num == 0){
+            if (player1.cannotshow == 1 && player2.cannotshow == 1){
                 currentcard = NPCshow_othernoshow(player3, currentcard);
                 player3 = aftershowing(player3, currentcard.cards);
             }else{

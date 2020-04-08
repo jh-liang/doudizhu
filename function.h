@@ -44,6 +44,14 @@ int printcurrentcard(player playerx, card *currentcard);
 
 card *findconst(const card sample[], card *handcard, int length);
 
+
+int givingout_cards(player player1, player player2, player player3, current currentcard);
+
+int givingout_cards_sub_1(player player1, player player2, player player3, current currentcard);
+
+int givingout_cards_sub_2_3(player player1, player playerx1, player playerx2, current currentcard);
+
+
 #endif //DOUDIZHU_FUNCTION_H
 
 extern const card row_sample_5[5];
@@ -54,13 +62,14 @@ extern const card row_sample_9[9];
 extern const card row_sample_10[10];
 extern const card row_sample_11[11];
 extern const card row_sample_12[12];
-extern const card triple_sample[3];
-extern const card bomb_sample[4];
 extern const card bombplustwo_sample[6];
 extern const card bombplustwo_sample_2[6];
 extern const card bombplustwo_sample_3[6];
 extern const card bombplustwo_sample_4[6];
 extern const card tripair_sample[6];
+extern const card quapair_sample[8];
+extern const card pentapair_sample[10];
+
 extern const card twotriple_sample[6];
 extern const card threetriple_sample[9];
 extern const card threeplustwo_sample_1[5];
