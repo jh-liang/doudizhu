@@ -38,11 +38,11 @@ player aftershowing(player playerx, card *currentcard);
 int countcard(card *cards);
 //an action to count the amount or cards in a card group
 
-card *find(card *currentcard, card *handcard);
+card *find(card*show, card *currentcard, card *handcard);
 
 int printcurrentcard(player playerx, card *currentcard);
 
-card *findconst(const card sample[], card *handcard, int length);
+card *findconst(card* show, const card sample[], card *handcard, int length);
 
 
 int givingout_cards(player player1, player player2, player player3, current currentcard);
