@@ -15,7 +15,7 @@
 card* shuffle(card *deck);
 //used to shuffle at the beginning of the game
 
-player distributing(card *deck, player playerx, int playercode);
+player distributing(card *deck, player playerx);
 //distributing cards to players.
 
 card* shufflethefirstthree(card *deck, card *firstthree);
@@ -30,9 +30,9 @@ card* ordering(card *cards);
 current NPCshow(player playerx, current currentcard);
 //NPC showing card
 
-current NPCshow_othernoshow(player playerx, current current);
+current NPCshow_othernoshow(player playerx, current currentcard);
 
-player aftershowing(player playerx, card *currentcard);
+player aftershowing(player playerx, current currentcard);
 //response to NPCshow
 
 int countcard(card *cards);

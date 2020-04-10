@@ -15,6 +15,7 @@ typedef struct _current {
     card* cards;    //card的一种
     int special;    //for special card cases not covered in "find" function
     int multiple;   //count the multiple
+    int state_playercannotout;
 } current;
 
 typedef struct _player {
