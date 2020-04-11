@@ -198,7 +198,6 @@ current NPCshow(player playerx, current currentcard){
             }
 
             if (show[0].num == 0) {
-                free(show);
                 currentcard.state_playercannotout = 1;
             }
             else {
@@ -208,44 +207,81 @@ current NPCshow(player playerx, current currentcard){
                     currentcard.cards[i].num = show[i].num;
                     currentcard.cards[i].code = show[i].code;
                 }
-                free(show);
             }
         }
         else if (amount == 3) {
-            for (int i = 0; i <= amount - 1; i++) {
+            for (int i = 0; i <= amount - 3; i++) {
                 if (playerx.hand[i].num > currentcard.cards[0].num
                     && playerx.hand[i].num == playerx.hand[i + 1].num
                     && playerx.hand[i + 1].num == playerx.hand[i + 2].num) {
-                    currentcard.cards[0] = playerx.hand[i];
-                    currentcard.cards[1] = playerx.hand[i + 1];
-                    currentcard.cards[2] = playerx.hand[i + 2];
-                    memset(playerx.hand + i + 3, 0, (19 - i - 3 + 1) * sizeof(card));
+                    memset(currentcard.cards, 0, 20 * sizeof(card));
+                    for (int j = 0; j <= 2; j++) {
+                        currentcard.cards[j].patt = playerx.hand[i + j].patt;
+                        currentcard.cards[j].num = playerx.hand[i + j].num;
+                        currentcard.cards[j].code = playerx.hand[i + j].code;
+                    }
+                    for (int j = 0; j <= 2; j++) {
+                        for (int k = i + j; k <= 19; k++) {
+                            playerx.hand[k].patt = playerx.hand[k + 1].patt; playerx.hand[k].num = playerx.hand[k + 1].num; playerx.hand[k].code = playerx.hand[k + 1].code;
+                        }
+                        memset(playerx.hand + countcard((playerx.hand)), 0, sizeof(card));
+                    }
+                    currentcard.state_playercannotout = 0;
+                    for (int f = 0; f <= 16; f++) {
+                        printf("~~~show %d,,%d,,%s'''''''''playerx %d,,%s''''\n", f + 1, currentcard.cards[f].num, currentcard.cards[f].patt,
+                               playerx.hand[i].num, playerx.hand[i].patt);
+                    }
                     break;
                 }
+                else currentcard.state_playercannotout = 1;
             }
         }
         else if (amount == 2) {
-            for (int i = 0; i <= amount - 1; i++) {
+            for (int i = 0; i <= amount - 2; i++) {
                 if (playerx.hand[i].num > currentcard.cards[0].num
                     && playerx.hand[i].num == playerx.hand[i + 1].num) {
-                    currentcard.cards[0] = playerx.hand[i];
-                    currentcard.cards[1] = playerx.hand[i + 1];
-                    memset(playerx.hand + i + 2, 0, (19 - i - 2 + 1) * sizeof(card));
+                    memset(currentcard.cards, 0, 20 * sizeof(card));
+                    for (int j = 0; j <= 1; j++) {
+                        currentcard.cards[j].patt = playerx.hand[i + j].patt;
+                        currentcard.cards[j].num = playerx.hand[i + j].num;
+                        currentcard.cards[j].code = playerx.hand[i + j].code;
+                    }
+                    for (int j = 0; j <= 1; j++) {
+                        for (int k = i + j; k <= 19; k++) {
+                            playerx.hand[k].patt = playerx.hand[k + 1].patt; playerx.hand[k].num = playerx.hand[k + 1].num; playerx.hand[k].code = playerx.hand[k + 1].code;
+                        }
+                        memset(playerx.hand + countcard((playerx.hand)), 0, sizeof(card));
+                    }
+                    for (int f = 0; f <= 16; f++) {
+                        printf("~~~show %d,,%d,,%s'''''''''playerx %d,,%s''''\n", f + 1, currentcard.cards[f].num, currentcard.cards[f].patt,
+                               playerx.hand[i].num, playerx.hand[i].patt);
+                    }
+                    currentcard.state_playercannotout = 0;
                     break;
                 }
+                else currentcard.state_playercannotout = 1;
             }
         }
         else if (amount == 1) {
             for (int i = 0; i <= amount - 1; i++) {
                 if (playerx.hand[i].num > currentcard.cards[0].num
                     && playerx.hand[i].num != playerx.hand[i+1].num) {
-                    currentcard.cards[0] = playerx.hand[i];
-                    memset(playerx.hand + i + 1, 0, (19 - i - 1 + 1) * sizeof(card));
+                    memset(currentcard.cards, 0, 20 * sizeof(card));
+                    currentcard.cards[0].patt = playerx.hand[i].patt;
+                    currentcard.cards[0].num = playerx.hand[i].num;
+                    currentcard.cards[0].code = playerx.hand[i].code;
+                    for (int k = i; k <= 19; k++) {
+                        playerx.hand[k].patt = playerx.hand[k + 1].patt; playerx.hand[k].num = playerx.hand[k + 1].num; playerx.hand[k].code = playerx.hand[k + 1].code;
+                    }
+                    memset(playerx.hand + countcard((playerx.hand)), 0, sizeof(card));
+                    currentcard.state_playercannotout = 0;
                     break;
                 }
+                else currentcard.state_playercannotout = 1;
             }
         }
     }
+    free(show);
     return currentcard;
 }
 
@@ -314,23 +350,66 @@ current NPCshow_othernoshow(player playerx, current currentcard){
     for (int i = 0; i <= amount - 1; i++) {
         if (playerx.hand[i].num == playerx.hand[i + 1].num
             && playerx.hand[i + 1].num == playerx.hand[i + 2].num) {
-            currentcard.cards[0] = playerx.hand[i];
-            currentcard.cards[1] = playerx.hand[i + 1];
-            currentcard.cards[2] = playerx.hand[i + 2];
-            break;
+            for (int f = 0; f <= 16; f++) {
+                printf("~~~%d,,playerx %d,,%s''''\n", f + 1, playerx.hand[i].num, playerx.hand[i].patt);
+            }
+            for (int j = 0; j <= 2; j++) {
+                printf("%d--->%d\n", i + j, playerx.hand[i + j].num);
+                currentcard.cards[j].patt = playerx.hand[i + j].patt;
+                currentcard.cards[j].num = playerx.hand[i + j].num;
+                currentcard.cards[j].code = playerx.hand[i + j].code;
+            }
+            for (int j = 0; j <= 2; j++) {
+                for (int k = i + j; k <= 19; k++) {
+                    playerx.hand[k].patt = playerx.hand[k + 1].patt; playerx.hand[k].num = playerx.hand[k + 1].num; playerx.hand[k].code = playerx.hand[k + 1].code;
+                }
+                memset(playerx.hand + countcard((playerx.hand)), 0, sizeof(card));
+            }
+            for (int f = 0; f <= 16; f++) {
+                printf("~~~show %d,,%d,,%s'''''''''playerx %d,,%s''''\n", f + 1, currentcard.cards[f].num, currentcard.cards[f].patt,
+                       playerx.hand[i].num, playerx.hand[i].patt);
+            }
+            return currentcard;
         }
     }
+
     for (int i = 0; i <= amount - 1; i++) {
         if (playerx.hand[i].num == playerx.hand[i + 1].num) {
-            currentcard.cards[0] = playerx.hand[i];
-            currentcard.cards[1] = playerx.hand[i + 1];
-            break;
+            for (int j = 0; j <= 1; j++) {
+                currentcard.cards[j].patt = playerx.hand[i+j].patt;
+                currentcard.cards[j].num = playerx.hand[i+j].num;
+                currentcard.cards[j].code = playerx.hand[i+j].code;
+            }
+            for (int f = 0; f <= 16; f++) {
+                printf("~~~%d,,playerx %d,,%s''''\n", f + 1, playerx.hand[i].num, playerx.hand[i].patt);
+            }
+            for (int j = 0; j <= 1; j++) {
+                for (int k = i + j; k <= 19; k++) {
+                    playerx.hand[k].patt = playerx.hand[k + 1].patt; playerx.hand[k].num = playerx.hand[k + 1].num; playerx.hand[k].code = playerx.hand[k + 1].code;
+                }
+                memset(playerx.hand + countcard((playerx.hand)), 0, sizeof(card));
+            }
+            for (int f = 0; f <= 16; f++) {
+                printf("~~~show %d,,%d,,%s'''''''''playerx %d,,%s''''\n", f + 1, currentcard.cards[f].num, currentcard.cards[f].patt,
+                       playerx.hand[i].num, playerx.hand[i].patt);
+            }
+            return currentcard;
         }
     }
     for (int i = 0; i <= amount - 1; i++) {
         if (playerx.hand[i].num < 8 && playerx.hand[i].num != playerx.hand[i+1].num) {
-            currentcard.cards[0] = playerx.hand[i];
-            break;
+            currentcard.cards[0].patt = playerx.hand[i].patt;
+            currentcard.cards[0].num = playerx.hand[i].num;
+            currentcard.cards[0].code = playerx.hand[i].code;
+            for (int k = i; k <= 19; k++) {
+                playerx.hand[k].patt = playerx.hand[k + 1].patt; playerx.hand[k].num = playerx.hand[k + 1].num; playerx.hand[k].code = playerx.hand[k + 1].code;
+            }
+            memset(playerx.hand + countcard((playerx.hand)), 0, sizeof(card));
+            return currentcard;
+            for (int f = 0; f <= 16; f++) {
+                printf("~~~show %d,,%d,,%s'''''''''playerx %d,,%s''''\n", f + 1, currentcard.cards[f].num, currentcard.cards[f].patt,
+                       playerx.hand[i].num, playerx.hand[i].patt);
+            }
         }
     }
     currentcard.special = 0;
@@ -338,23 +417,23 @@ current NPCshow_othernoshow(player playerx, current currentcard){
 }
 
 player aftershowing(player playerx, current currentcard) {
-    int amount = countcard(currentcard.cards);
-    int pamount = countcard(playerx.hand);
+//    int amount = countcard(currentcard.cards);
+    playerx.numofhand = countcard(playerx.hand);
+//    int pamount = countcard(playerx.hand);
 
     if (currentcard.state_playercannotout == 0){
-        for (int i = 0; i <= amount - 1; i++){
-            for (int j = 0; j <= pamount - 1; j++){
-                if (currentcard.cards[i].code == playerx.hand[j].code){
-                    for (int k = j; k <= (pamount-1); k++) {
-                        playerx.hand[k] = playerx.hand[k + 1];
-                    }
-                    memset(&playerx.hand[pamount - 1], 0, sizeof(card));
-                    pamount--;
-                    break;
-                }
-            }
-        }
-        playerx.numofhand -= amount;
+//        for (int i = 0; i <= amount - 1; i++){
+//            for (int j = 0; j <= pamount - 1; j++){
+//                if (currentcard.cards[i].code == playerx.hand[j].code){
+//                    for (int k = j; k <= (pamount-1); k++) {
+//                        playerx.hand[k] = playerx.hand[k + 1];
+//                    }
+//                    memset(&playerx.hand[pamount - 1], 0, sizeof(card));
+//                    pamount--;
+//                    break;
+//                }
+//            }
+//        }
         playerx.cannotshow = 0;
     }
     else playerx.cannotshow = 1;
@@ -394,6 +473,7 @@ card *find(card* show, card *currentcard, card *handcard){
             quatity[hh] = 1;
         }
     }
+
 
     int pamount = countcard(handcard);
     int *ppattern = calloc(pamount, sizeof(int));
@@ -471,6 +551,7 @@ card *find(card* show, card *currentcard, card *handcard){
         if (nhh == hh) break;
         else nhh = 1;
     }
+
     free(pattern); free(ppattern); free(pquatity); free(lquatity); free(value);
     free(pvalue); free(lvalue); free(dvalue); free(dlvalue);
 
@@ -490,7 +571,7 @@ card *find(card* show, card *currentcard, card *handcard){
     sum[0] = 0;
     sum[1] = quatity[0];
     for (int i = 2; i <= hh+1; i++){
-        sum[i] = sum[i - 1] + quatity[i - 1];
+        sum[i] = sum[i -  1] + quatity[i - 1];
     }
 
     int *newarray = calloc(length, sizeof(int));
@@ -509,12 +590,11 @@ card *find(card* show, card *currentcard, card *handcard){
                 }
                 pamount--;
                 //printcurrentcard(playerx, currentcard);
-                handcard[pamount-1].code = 0;
+                memset(handcard + pamount, 0, sizeof(card));
                 break;
             }
         }
     }
-
     free(sum); free(newarray); free(quatity); free(new);
     return show;
 }
@@ -672,7 +752,7 @@ card *findconst(card* show, const card sample[], card *handcard, int length) {
                 }
                 pamount--;
                 //printcurrentcard(playerx, currentcard);
-                handcard[pamount-1].code = 0;
+                memset(handcard + pamount, 0, sizeof(card));
                 break;
             }
         }

@@ -106,6 +106,9 @@ int main() {
         printf("~~~~~~%d,,%d,,%s~~~~~~\n", i+1, player3.hand[i].num, player3.hand[i].patt);
     }
 
+
+
+
     while (player1.numofhand > 0 || player2.numofhand > 0 || player3.numofhand > 0) {
         if (strncmp(player1.role, "Load", 4) == 0){
             printf("Player 1 is trying to show cards.\n");
@@ -117,6 +120,7 @@ int main() {
                 player1 = aftershowing(player1, currentcard);
             }
             printcurrentcard(player1, currentcard.cards);
+            if (player1.numofhand == 0) break;
 
             printf("Player 2 is trying to show cards.\n");
             if (player1.cannotshow == 1 && player3.cannotshow == 1){
@@ -127,6 +131,7 @@ int main() {
                 player2 = aftershowing(player2, currentcard);
             }
             printcurrentcard(player2, currentcard.cards);
+            if (player1.numofhand == 0) break;
 
             printf("Player 3 is trying to show cards.\n");
             if (player1.cannotshow == 1 && player2.cannotshow == 1){
@@ -137,6 +142,7 @@ int main() {
                 player3 = aftershowing(player3, currentcard);
             }
             printcurrentcard(player3, currentcard.cards);
+            if (player1.numofhand == 0) break;
         }
 
         else if (strncmp(player2.role, "Load", 4) == 0){
@@ -149,7 +155,7 @@ int main() {
                 player2 = aftershowing(player2, currentcard);
             }
             printcurrentcard(player2, currentcard.cards);
-
+            if (player1.numofhand == 0) break;
 
             printf("Player 3 is trying to show cards.\n");
             if (player1.cannotshow == 1 && player2.cannotshow == 1){
@@ -160,7 +166,7 @@ int main() {
                 player3 = aftershowing(player3, currentcard);
             }
             printcurrentcard(player3, currentcard.cards);
-
+            if (player1.numofhand == 0) break;
 
             printf("Player 1 is trying to show cards.\n");
             if (player2.cannotshow == 1 && player3.cannotshow == 1){
@@ -171,6 +177,7 @@ int main() {
                 player1 = aftershowing(player1, currentcard);
             }
             printcurrentcard(player1, currentcard.cards);
+            if (player1.numofhand == 0) break;
         }
         else{
             printf("Player 3 is trying to show cards.\n");
@@ -182,6 +189,7 @@ int main() {
                 player3 = aftershowing(player3, currentcard);
             }
             printcurrentcard(player3, currentcard.cards);
+            if (player1.numofhand == 0) break;
 
             printf("Player 1 is trying to show cards.\n");
             if (player2.cannotshow == 1 && player3.cannotshow == 1){
@@ -192,6 +200,7 @@ int main() {
                 player1 = aftershowing(player1, currentcard);
             }
             printcurrentcard(player1, currentcard.cards);
+            if (player1.numofhand == 0) break;
 
             printf("Player 2 is trying to show cards.\n");
             if (player3.cannotshow == 1 && player1.cannotshow == 1){
@@ -202,6 +211,7 @@ int main() {
                 player2 = aftershowing(player2, currentcard);
             }
             printcurrentcard(player2, currentcard.cards);
+            if (player1.numofhand == 0) break;
         }
     }
 
